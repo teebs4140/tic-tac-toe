@@ -9,36 +9,65 @@ interface ScoreBoardProps {
 
 export default function ScoreBoard({ scores }: ScoreBoardProps) {
   return (
-    <div className="scoreboard w-full max-w-md mx-auto py-4" role="region" aria-label="Game scores">
-      <h3 className="text-lg font-bold text-center mb-4 text-gray-700">Score Board</h3>
-      <div className="grid grid-cols-3 gap-4">
-        {/* Player X Score */}
-        <div className="score-card bg-blue-50 border-2 border-blue-200 rounded-lg p-4 text-center transition-all duration-300 hover:shadow-md">
-          <div className="text-blue-600 font-bold text-lg mb-1">Player X</div>
-          <div className="text-2xl font-bold text-blue-800 animate-score-bump" key={scores.X}>
-            {scores.X}
+    <section
+      className="relative w-full max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-panel backdrop-blur-xl"
+      role="region"
+      aria-label="Game scores"
+    >
+      <div className="absolute -top-24 left-[-120px] h-56 w-56 rounded-full bg-gradient-to-br from-violet-500/35 via-indigo-500/15 to-transparent blur-3xl" />
+      <header className="relative mb-6 flex items-center justify-between">
+        <div>
+          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Scoreboard</p>
+          <h3 className="mt-2 text-2xl font-semibold text-slate-100">Current standings</h3>
+        </div>
+        <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-slate-300">
+          Live
+        </span>
+      </header>
+
+      <div className="relative grid gap-4 sm:grid-cols-3">
+        <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-950/80 via-slate-900/60 to-sky-900/40 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-sky-400/40 via-cyan-300/10 to-transparent opacity-70 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Player X</p>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-4xl font-semibold text-transparent bg-gradient-to-br from-sky-300 via-cyan-200 to-blue-400 bg-clip-text animate-score-bump" key={`score-x-${scores.X}`}>
+              {scores.X}
+            </span>
+            <span className="text-sm text-slate-400">wins</span>
           </div>
-          <div className="text-sm text-blue-600">wins</div>
+          <p className="mt-3 text-xs text-slate-500/80">
+            Opens the match and plays in neon blue.
+          </p>
         </div>
 
-        {/* Draws */}
-        <div className="score-card bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4 text-center transition-all duration-300 hover:shadow-md">
-          <div className="text-yellow-600 font-bold text-lg mb-1">Draws</div>
-          <div className="text-2xl font-bold text-yellow-800 animate-score-bump" key={scores.draws}>
-            {scores.draws}
+        <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-950/80 via-slate-900/60 to-amber-900/30 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-amber-300/35 via-amber-200/10 to-transparent opacity-70 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Draws</p>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-4xl font-semibold text-transparent bg-gradient-to-br from-amber-200 via-yellow-200 to-amber-300 bg-clip-text animate-score-bump" key={`score-draws-${scores.draws}`}>
+              {scores.draws}
+            </span>
+            <span className="text-sm text-slate-400">ties</span>
           </div>
-          <div className="text-sm text-yellow-600">ties</div>
+          <p className="mt-3 text-xs text-slate-500/80">
+            Perfect balance—nobody let go of the line.
+          </p>
         </div>
 
-        {/* Player O Score */}
-        <div className="score-card bg-red-50 border-2 border-red-200 rounded-lg p-4 text-center transition-all duration-300 hover:shadow-md">
-          <div className="text-red-600 font-bold text-lg mb-1">Player O</div>
-          <div className="text-2xl font-bold text-red-800 animate-score-bump" key={scores.O}>
-            {scores.O}
+        <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-950/80 via-slate-900/60 to-rose-900/35 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-rose-400/35 via-pink-300/10 to-transparent opacity-70 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Player O</p>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-4xl font-semibold text-transparent bg-gradient-to-br from-rose-300 via-pink-300 to-orange-300 bg-clip-text animate-score-bump" key={`score-o-${scores.O}`}>
+              {scores.O}
+            </span>
+            <span className="text-sm text-slate-400">wins</span>
           </div>
-          <div className="text-sm text-red-600">wins</div>
+          <p className="mt-3 text-xs text-slate-500/80">
+            The closer—steady play with a vibrant finish.
+          </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

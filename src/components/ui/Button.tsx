@@ -18,45 +18,47 @@ export default function Button({
   const getVariantStyles = (variant: ButtonProps['variant']) => {
     switch (variant) {
       case 'primary':
-        return 'bg-blue-600 hover:bg-blue-700 text-white border-transparent';
+        return 'border-transparent bg-gradient-to-br from-violet-500 via-indigo-500 to-sky-500 hover:from-violet-400 hover:via-indigo-400 hover:to-sky-400 text-white shadow-lg shadow-indigo-500/40';
       case 'secondary':
-        return 'bg-gray-200 hover:bg-gray-300 text-gray-900 border-gray-300';
+        return 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20 hover:border-white/30 shadow-lg shadow-slate-900/40';
       case 'danger':
-        return 'bg-red-600 hover:bg-red-700 text-white border-transparent';
+        return 'border-transparent bg-gradient-to-br from-rose-500 via-red-500 to-orange-400 hover:from-rose-400 hover:via-red-400 hover:to-orange-300 text-white shadow-lg shadow-rose-500/40';
       default:
-        return 'bg-blue-600 hover:bg-blue-700 text-white border-transparent';
+        return 'border-transparent bg-gradient-to-br from-violet-500 via-indigo-500 to-sky-500 hover:from-violet-400 hover:via-indigo-400 hover:to-sky-400 text-white shadow-lg shadow-indigo-500/40';
     }
   };
 
   const getSizeStyles = (size: ButtonProps['size']) => {
     switch (size) {
       case 'sm':
-        return 'px-3 py-1.5 text-sm';
+        return 'px-4 py-2 text-sm';
       case 'md':
-        return 'px-4 py-2 text-base';
+        return 'px-6 py-3 text-base';
       case 'lg':
-        return 'px-6 py-3 text-lg';
+        return 'px-8 py-4 text-lg font-semibold';
       default:
-        return 'px-4 py-2 text-base';
+        return 'px-6 py-3 text-base';
     }
   };
 
   const baseStyles = [
     'inline-flex items-center justify-center',
-    'font-medium rounded-md border',
-    'transition-all duration-200',
-    'focus:outline-none focus:ring-2 focus:ring-offset-2',
+    'font-semibold rounded-2xl border',
+    'transition-all duration-200 ease-out',
+    'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
     'disabled:opacity-50 disabled:cursor-not-allowed',
-    'hover:shadow-md transform hover:scale-105 active:scale-95',
+    'hover:-translate-y-[2px] active:translate-y-[1px]',
   ];
 
   const variantStyles = getVariantStyles(variant);
   const sizeStyles = getSizeStyles(size);
 
   // Focus ring color based on variant
-  const focusRingColor = variant === 'danger' ? 'focus:ring-red-500' :
-                        variant === 'secondary' ? 'focus:ring-gray-500' :
-                        'focus:ring-blue-500';
+  const focusRingColor = variant === 'danger'
+    ? 'focus-visible:ring-rose-400/60'
+    : variant === 'secondary'
+      ? 'focus-visible:ring-white/50'
+      : 'focus-visible:ring-indigo-400/60';
 
   const combinedClassName = [
     ...baseStyles,

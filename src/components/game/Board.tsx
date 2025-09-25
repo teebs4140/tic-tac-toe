@@ -15,10 +15,12 @@ export default function Board({ board, onSquareClick, winningLine, disabled = fa
   return (
     <div className="game-board-container flex flex-col items-center">
       <div
-        className="grid grid-cols-3 gap-1 p-4 bg-gray-200 rounded-lg shadow-lg transition-all duration-300"
+        className="relative grid h-full w-full max-h-[820px] max-w-[820px] grid-cols-3 gap-6 rounded-[36px] border border-white/10 bg-slate-900/70 p-6 shadow-board backdrop-blur-xl transition-all duration-300"
+        style={{ width: 'min(92vw, 82vh)', height: 'min(92vw, 82vh)' }}
         role="grid"
         aria-label="Tic-tac-toe game board"
       >
+        <div className="pointer-events-none absolute inset-0 rounded-[36px] border border-white/5" />
         {board.map((square, index) => (
           <Square
             key={index}
