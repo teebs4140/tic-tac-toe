@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom global styles */
+@layer base {
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  /* Custom animation keyframes for winner pulse */
+  @keyframes winner-pulse {
+    0%, 100% {
+      transform: scale(1);
+      background-color: rgb(220 252 231); /* bg-green-100 */
+    }
+    50% {
+      transform: scale(1.05);
+      background-color: rgb(187 247 208); /* bg-green-200 */
+    }
+  }
+
+  /* Custom animation keyframes for score bump */
+  @keyframes score-bump {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* Apply custom animations */
+  .animate-winner-pulse {
+    animation: winner-pulse 1s ease-in-out infinite;
+  }
+
+  .animate-score-bump {
+    animation: score-bump 0.3s ease-out;
+  }
+}
+
+@layer utilities {
+  /* Utility for smooth transitions on all interactive elements */
+  .transition-smooth {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
