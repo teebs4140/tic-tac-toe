@@ -1,73 +1,70 @@
 'use client';
 
 import React from 'react';
-import { ScoreState } from '@/types/game';
+import { ScoreState, Player } from '@/types/game';
 
 interface ScoreBoardProps {
   scores: ScoreState;
+  currentPlayer: Player;
+  winner: Player;
+  isDraw: boolean;
+  onResetScores?: () => void;
 }
 
-export default function ScoreBoard({ scores }: ScoreBoardProps) {
+export default function ScoreBoard({ scores, currentPlayer, winner, isDraw, onResetScores }: ScoreBoardProps) {
+  const getTileState = (player: Player) => {
+    if (!player) return { active: false, highlight: false };
+    return {
+      active: !winner && !isDraw && currentPlayer === player,
+      highlight: winner === player,
+    };
+  };
+
   return (
     <section
-      className="relative w-full max-w-3xl overflow-hidden rounded-3xl border border-white/15 bg-blue-950/70 p-6 shadow-panel backdrop-blur-xl"
+      className="scoreboard-card"
       role="region"
-      aria-label="Game scores"
+      aria-label="Scoreboard"
+      aria-live="polite"
     >
-      <div className="absolute -top-24 left-[-120px] h-56 w-56 rounded-full bg-gradient-to-br from-violet-500/35 via-indigo-500/15 to-transparent blur-3xl" />
-      <header className="relative mb-6 flex items-center justify-between">
-        <div>
-          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Scoreboard</p>
-          <h3 className="mt-2 text-2xl font-semibold text-slate-100">Current standings</h3>
-        </div>
-        <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-200">
-          Live
-        </span>
-      </header>
 
-      <div className="relative grid gap-4 sm:grid-cols-3">
-        <div className="group relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-slate-950/85 via-slate-900/70 to-sky-900/45 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
-          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-sky-400/40 via-cyan-300/10 to-transparent opacity-70 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
-          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Player X</p>
-          <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-4xl font-semibold text-transparent bg-gradient-to-br from-sky-300 via-cyan-200 to-blue-400 bg-clip-text animate-score-bump" key={`score-x-${scores.X}`}>
-              {scores.X}
-            </span>
-            <span className="text-sm text-slate-400">wins</span>
-          </div>
-          <p className="mt-3 text-xs text-slate-500/80">
-            Opens the match and plays in neon blue.
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-slate-950/85 via-slate-900/70 to-amber-900/35 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
-          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-amber-300/35 via-amber-200/10 to-transparent opacity-70 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
-          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Draws</p>
-          <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-4xl font-semibold text-transparent bg-gradient-to-br from-amber-200 via-yellow-200 to-amber-300 bg-clip-text animate-score-bump" key={`score-draws-${scores.draws}`}>
-              {scores.draws}
-            </span>
-            <span className="text-sm text-slate-400">ties</span>
-          </div>
-          <p className="mt-3 text-xs text-slate-500/80">
-            Perfect balance—nobody let go of the line.
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-slate-950/85 via-slate-900/70 to-rose-900/40 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
-          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-rose-400/35 via-pink-300/10 to-transparent opacity-70 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
-          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Player O</p>
-          <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-4xl font-semibold text-transparent bg-gradient-to-br from-rose-300 via-pink-300 to-orange-300 bg-clip-text animate-score-bump" key={`score-o-${scores.O}`}>
-              {scores.O}
-            </span>
-            <span className="text-sm text-slate-400">wins</span>
-          </div>
-          <p className="mt-3 text-xs text-slate-500/80">
-            The closer—steady play with a vibrant finish.
-          </p>
-        </div>
+      <div className="scoreboard-card__grid">
+        <ScoreTile
+          label="Player X"
+          value={scores.X}
+          {...getTileState('X')}
+        />
+        <ScoreTile
+          label="Draws"
+          value={scores.draws}
+        />
+        <ScoreTile
+          label="Player O"
+          value={scores.O}
+          {...getTileState('O')}
+        />
       </div>
     </section>
+  );
+}
+
+interface ScoreTileProps {
+  label: string;
+  value: number;
+  active?: boolean;
+  highlight?: boolean;
+}
+
+function ScoreTile({ label, value, active = false, highlight = false }: ScoreTileProps) {
+  return (
+    <article
+      className={`score-tile-simple ${active ? 'score-tile-simple--active' : ''} ${highlight ? 'score-tile-simple--highlight' : ''}`}
+      aria-label={`${label} has ${value} ${label === 'Draws' ? 'draws' : 'wins'}`}
+    >
+      <p className="score-tile-simple__label">{label}</p>
+      <div className={`score-tile-simple__counter ${active ? 'score-tile-simple__counter--active' : ''}`}>
+        <span key={`${label}-${value}`}>{value}</span>
+      </div>
+    </article>
   );
 }

@@ -23,21 +23,22 @@ export default function Square({
       'relative grid w-full place-items-center overflow-hidden',
       'aspect-square',
       'min-h-[90px] min-w-[90px]',
-      'max-h-[260px] max-w-[260px]',
-      'rounded-[24px]',
-      'bg-white/90 backdrop-blur-sm',
+      'max-h-[300px] max-w-[300px]',
+      'rounded-[48px]',
+      'border border-[rgba(45,60,90,0.12)]',
+      'bg-[#F5F8FC]',
       'text-[clamp(2.5rem,8vw,6.5rem)]',
       'font-bold',
       'transition-all duration-200 ease-out',
-      'shadow-xl shadow-black/10',
+      'shadow-[0_20px_35px_rgba(0,0,0,0.14)]',
       'disabled:cursor-not-allowed disabled:opacity-50',
       'focus-visible:outline-none',
     ];
 
     if (glowEnabled) {
       baseStyles.push(
-        'before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.45),transparent_70%)] before:opacity-0 before:transition before:duration-300',
-        'hover:before:opacity-70'
+        'after:absolute after:inset-0 after:-z-10 after:rounded-[inherit] after:bg-[radial-gradient(circle_at_50%_30%,rgba(255,224,232,0.3),transparent_75%)] after:opacity-0 after:transition after:duration-300',
+        'hover:after:opacity-70'
       );
     }
 
@@ -45,25 +46,26 @@ export default function Square({
     if (!value && !disabled) {
       baseStyles.push(
         'cursor-pointer',
-        'hover:-translate-y-2',
-        'hover:bg-white/95',
-        'hover:shadow-2xl hover:shadow-black/20'
+        'hover:-translate-y-1',
+        'hover:bg-white',
+        'hover:shadow-[0_26px_55px_rgba(0,0,0,0.18)]'
       );
     }
 
     // Winning square animation
     if (isWinningSquare) {
       baseStyles.push(
-        'bg-green-100/90',
-        'shadow-2xl shadow-green-400/40'
+        'bg-[#EAF6FF]',
+        'border-[rgba(45,60,90,0.28)]',
+        'shadow-[0_30px_70px_rgba(45,60,90,0.22)]'
       );
     }
 
     // Player specific colors
     if (value === 'X') {
-      baseStyles.push('text-blue-700');
+      baseStyles.push('text-[#2D3C5A]');
     } else if (value === 'O') {
-      baseStyles.push('text-red-700');
+      baseStyles.push('text-[#D46A93]');
     }
 
     // Disabled state
