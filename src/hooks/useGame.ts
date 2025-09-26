@@ -8,6 +8,7 @@ import {
   MoveHistoryEntry,
   GamePreferences,
   ThemeVariant,
+  PlayerNames,
 } from '@/types/game';
 import { checkWinner, checkDraw, initializeBoard } from '@/lib/gameLogic';
 
@@ -21,11 +22,13 @@ export interface UseGameReturn {
   scores: ScoreState;
   history: MoveHistoryEntry[];
   preferences: GamePreferences;
+  playerNames: PlayerNames;
 
   // Game actions
   handleSquareClick: (index: number) => void;
   resetGame: () => void;
   newGame: () => void;
+  setPlayerName: (player: Exclude<Player, null>, name: string) => void;
   toggleCelebrations: () => void;
   toggleAmbientGlow: () => void;
   setTheme: (theme: ThemeVariant) => void;
@@ -48,6 +51,10 @@ export function useGame(): UseGameReturn {
     celebrationsEnabled: true,
     ambientGlow: true,
     theme: 'neon',
+  });
+  const [playerNames, setPlayerNames] = useState<PlayerNames>({
+    X: 'Player X',
+    O: 'Player O',
   });
 
   // Handle square click with game logic
@@ -111,6 +118,14 @@ export function useGame(): UseGameReturn {
     setScores({ X: 0, O: 0, draws: 0 });
   }, [resetGame]);
 
+  const setPlayerName = useCallback((player: Exclude<Player, null>, name: string) => {
+    const sanitized = name.slice(0, 18);
+    setPlayerNames(prev => ({
+      ...prev,
+      [player]: sanitized,
+    }));
+  }, []);
+
   const toggleCelebrations = useCallback(() => {
     setPreferences(prev => ({
       ...prev,
@@ -142,11 +157,13 @@ export function useGame(): UseGameReturn {
     scores,
     history,
     preferences,
+    playerNames,
 
     // Game actions
     handleSquareClick,
     resetGame,
     newGame,
+    setPlayerName,
     toggleCelebrations,
     toggleAmbientGlow,
     setTheme,

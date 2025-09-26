@@ -17,6 +17,11 @@ export interface ScoreState {
   draws: number;
 }
 
+export interface PlayerNames {
+  X: string;
+  O: string;
+}
+
 export interface MoveHistoryEntry {
   player: Exclude<Player, null>;
   index: number;

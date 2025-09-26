@@ -1,19 +1,27 @@
 'use client';
 
 import React from 'react';
-import { Player } from '@/types/game';
+import { Player, PlayerNames } from '@/types/game';
 
 interface GameStatusProps {
   currentPlayer: Player;
   winner: Player;
   isDraw: boolean;
+  playerNames: PlayerNames;
 }
 
-export default function GameStatus({ currentPlayer, winner, isDraw }: GameStatusProps) {
+export default function GameStatus({ currentPlayer, winner, isDraw, playerNames }: GameStatusProps) {
+  const resolveName = (player: Player) => {
+    if (!player) return '';
+    const mapped = playerNames[player];
+    const fallback = `Player ${player}`;
+    return mapped && mapped.trim().length > 0 ? mapped : fallback;
+  };
+
   const getStatusMessage = () => {
     if (winner) {
       return {
-        message: `Winner: Player ${winner}`,
+        message: `Winner: ${resolveName(winner)}`,
         variant: 'winner',
       };
     }
@@ -26,7 +34,7 @@ export default function GameStatus({ currentPlayer, winner, isDraw }: GameStatus
     }
 
     return {
-      message: `Turn: Player ${currentPlayer}`,
+      message: `Turn: ${resolveName(currentPlayer)}`,
       variant: currentPlayer === 'X' ? 'x' : 'o',
     };
   };

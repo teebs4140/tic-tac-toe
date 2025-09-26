@@ -18,9 +18,11 @@ export default function HomePage() {
     scores,
     history,
     preferences,
+    playerNames,
     handleSquareClick,
     resetGame,
     newGame,
+    setPlayerName,
   } = useGame();
 
   const gameIsOver = !!winner || isDraw;
@@ -85,12 +87,19 @@ export default function HomePage() {
             currentPlayer={currentPlayer}
             winner={winner}
             isDraw={isDraw}
+            playerNames={playerNames}
+            onPlayerNameChange={setPlayerName}
             onResetScores={newGame}
           />
         </div>
 
         <div className="status-wrapper">
-          <GameStatus currentPlayer={currentPlayer} winner={winner} isDraw={isDraw} />
+          <GameStatus
+            currentPlayer={currentPlayer}
+            winner={winner}
+            isDraw={isDraw}
+            playerNames={playerNames}
+          />
         </div>
       </div>
     </main>
