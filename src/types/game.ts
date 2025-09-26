@@ -17,6 +17,20 @@ export interface ScoreState {
   draws: number;
 }
 
+export interface MoveHistoryEntry {
+  player: Exclude<Player, null>;
+  index: number;
+  timestamp: number;
+}
+
+export type ThemeVariant = 'neon' | 'aurora';
+
+export interface GamePreferences {
+  celebrationsEnabled: boolean;
+  ambientGlow: boolean;
+  theme: ThemeVariant;
+}
+
 // All possible winning combinations in tic-tac-toe
 export const WINNING_COMBINATIONS = [
   [0, 1, 2], // Top row

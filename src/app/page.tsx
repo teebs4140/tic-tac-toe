@@ -5,7 +5,10 @@ import { useGame } from '@/hooks/useGame';
 import Board from '@/components/game/Board';
 import GameStatus from '@/components/game/GameStatus';
 import ScoreBoard from '@/components/game/ScoreBoard';
+import MoveHistory from '@/components/game/MoveHistory';
+import SettingsPanel from '@/components/game/SettingsPanel';
 import Button from '@/components/ui/Button';
+import CelebrationBurst from '@/components/ui/CelebrationBurst';
 
 export default function HomePage() {
   const {
@@ -15,56 +18,100 @@ export default function HomePage() {
     isDraw,
     winningLine,
     scores,
+    history,
+    preferences,
     handleSquareClick,
     resetGame,
     newGame,
+    toggleCelebrations,
+    toggleAmbientGlow,
+    setTheme,
   } = useGame();
 
   const gameIsOver = !!winner || isDraw;
+  const celebrationActive = preferences.celebrationsEnabled && !!winner;
+  const celebrationKey = celebrationActive ? `${winner}-${history.length}` : null;
+
+  const themeBackgroundClass = 'bg-sky-200/90';
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
-      {/* Ambient background accents */}
+    <main className="relative min-h-screen overflow-hidden text-slate-800">
+      {/* Cherry Blossom Background */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-[-240px] h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-violet-500/25 blur-3xl" />
-        <div className="absolute right-[-120px] top-[200px] h-[380px] w-[380px] rounded-full bg-sky-500/20 blur-3xl" />
-        <div className="absolute bottom-[-200px] left-[8%] h-[460px] w-[460px] rounded-full bg-rose-500/20 blur-[180px]" />
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(/cherry-blossoms.webp)',
+            filter: 'brightness(1.1) saturate(1.2) contrast(1.1)'
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-pink-50/10 to-white/30" />
+        <div className="absolute inset-0 flower-overlay">
+          {/* Top band */}
+          <span className="flower-dot flower-dot--lg" style={{ top: '4%', left: '6%' }} />
+          <span className="flower-dot flower-dot--md" style={{ top: '6%', left: '28%' }} />
+          <span className="flower-dot flower-dot--xl" style={{ top: '5%', left: '50%', animationDuration: '16s' }} />
+          <span className="flower-dot flower-dot--md" style={{ top: '6%', right: '28%' }} />
+          <span className="flower-dot flower-dot--lg" style={{ top: '4%', right: '6%' }} />
+
+          {/* Upper mid zone */}
+          <span className="flower-dot flower-dot--sm" style={{ top: '18%', left: '12%' }} />
+          <span className="flower-dot flower-dot--xs" style={{ top: '20%', left: '36%' }} />
+          <span className="flower-dot flower-dot--md" style={{ top: '18%', left: '60%' }} />
+          <span className="flower-dot flower-dot--sm" style={{ top: '20%', right: '14%' }} />
+
+          {/* Center band */}
+          <span className="flower-dot flower-dot--xs" style={{ top: '36%', left: '10%', animationDuration: '10s' }} />
+          <span className="flower-dot flower-dot--sm" style={{ top: '38%', left: '32%' }} />
+          <span className="flower-dot flower-dot--md" style={{ top: '40%', left: '52%' }} />
+          <span className="flower-dot flower-dot--xs" style={{ top: '36%', right: '18%' }} />
+          <span className="flower-dot flower-dot--sm" style={{ top: '42%', right: '6%', animationDuration: '13s' }} />
+
+          {/* Lower mid zone */}
+          <span className="flower-dot flower-dot--md" style={{ bottom: '24%', left: '14%' }} />
+          <span className="flower-dot flower-dot--sm" style={{ bottom: '22%', left: '34%' }} />
+          <span className="flower-dot flower-dot--xs" style={{ bottom: '26%', left: '52%' }} />
+          <span className="flower-dot flower-dot--sm" style={{ bottom: '24%', right: '30%' }} />
+          <span className="flower-dot flower-dot--md" style={{ bottom: '22%', right: '10%', animationDuration: '14s' }} />
+
+          {/* Bottom band */}
+          <span className="flower-dot flower-dot--lg" style={{ bottom: '6%', left: '6%' }} />
+          <span className="flower-dot flower-dot--md" style={{ bottom: '4%', left: '26%' }} />
+          <span className="flower-dot flower-dot--xl" style={{ bottom: '5%', left: '50%', animationDuration: '18s' }} />
+          <span className="flower-dot flower-dot--md" style={{ bottom: '4%', right: '26%' }} />
+          <span className="flower-dot flower-dot--lg" style={{ bottom: '6%', right: '6%' }} />
+        </div>
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1100px] flex-col items-center px-4 py-16 md:px-8 lg:px-12">
         {/* Header */}
         <header className="mb-12 text-center">
-          <span className="text-xs uppercase tracking-[0.45em] text-slate-400">
-            Strategy meets style
-          </span>
-          <h1 className="mt-4 text-5xl font-semibold leading-tight md:text-6xl">
-            <span className="bg-gradient-to-r from-violet-400 via-indigo-300 to-sky-300 bg-clip-text text-transparent">
-              Tic-Tac-Toe
-            </span>{' '}
-            reimagined
+          <h1 className="text-6xl font-bold text-pink-900 drop-shadow-sm md:text-7xl">
+            Tic-Tac-Toe
           </h1>
-          <p className="mt-4 text-base text-slate-300 md:text-lg">
-            Battle your friends on a sleek, modern board crafted for quick rounds and dramatic wins.
+          <p className="mt-4 text-xl text-slate-700 md:text-2xl">
+            Classic strategy, beautiful design
           </p>
         </header>
 
         <div className="flex w-full flex-1 flex-col items-center gap-12">
           {/* Primary play surface */}
           <section className="relative flex w-full flex-1 items-center justify-center">
-            <div className="relative overflow-hidden rounded-[40px] border border-white/10 bg-slate-900/40 p-6 shadow-panel backdrop-blur-2xl md:p-10">
-              <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-              <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(99,102,241,0.25),rgba(15,23,42,0)_60%)]" />
+            <div className="relative rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 p-8 shadow-2xl">
+              <CelebrationBurst active={celebrationActive} burstKey={celebrationKey} />
               <Board
                 board={board}
                 onSquareClick={handleSquareClick}
                 winningLine={winningLine}
                 disabled={gameIsOver}
+                glowEnabled={preferences.ambientGlow}
               />
             </div>
           </section>
 
           <div className="flex w-full flex-col items-center gap-8">
-            <div className="flex w-full max-w-3xl flex-col items-center gap-4 sm:flex-row">
+            {/* Game Controls */}
+            <div className="flex w-full max-w-md flex-col items-center gap-3 sm:flex-row">
               <Button
                 onClick={resetGame}
                 variant="primary"
@@ -72,7 +119,7 @@ export default function HomePage() {
                 className="w-full sm:flex-1"
                 disabled={board.every(square => square === null)}
               >
-                {gameIsOver ? 'Play Again' : 'Reset Round'}
+                {gameIsOver ? 'Play Again' : 'Reset'}
               </Button>
 
               <Button
@@ -81,22 +128,30 @@ export default function HomePage() {
                 size="lg"
                 className="w-full sm:flex-1"
               >
-                New Match
+                New Game
               </Button>
             </div>
 
-            <GameStatus currentPlayer={currentPlayer} winner={winner} isDraw={isDraw} />
-            <ScoreBoard scores={scores} />
+            {/* Simple Game Status */}
+            <div className="text-center">
+              <GameStatus currentPlayer={currentPlayer} winner={winner} isDraw={isDraw} />
+            </div>
 
-            <div className="w-full max-w-3xl rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-300/90 shadow-panel backdrop-blur-xl">
-              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">How to play</p>
-              <p className="mt-3 leading-relaxed">
-                Select an open square to place your mark. Win the round by connecting three in a row
-                horizontally, vertically, or diagonally.
-              </p>
-              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] text-slate-400/90">
-                <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1">Use Tab to navigate</span>
-                <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1">Press Space or Enter to select</span>
+            {/* Compact Score Display */}
+            <div className="rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 p-4 shadow-lg">
+              <div className="flex items-center justify-center gap-8 text-slate-800">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-700">{scores.X}</div>
+                  <div className="text-sm font-medium">Player X</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-gray-600">{scores.draws}</div>
+                  <div className="text-sm font-medium">Draws</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-red-700">{scores.O}</div>
+                  <div className="text-sm font-medium">Player O</div>
+                </div>
               </div>
             </div>
           </div>

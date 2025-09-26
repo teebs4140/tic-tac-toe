@@ -1,7 +1,14 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { Player, BoardState, ScoreState } from '@/types/game';
+import {
+  Player,
+  BoardState,
+  ScoreState,
+  MoveHistoryEntry,
+  GamePreferences,
+  ThemeVariant,
+} from '@/types/game';
 import { checkWinner, checkDraw, initializeBoard } from '@/lib/gameLogic';
 
 export interface UseGameReturn {
@@ -12,11 +19,16 @@ export interface UseGameReturn {
   isDraw: boolean;
   winningLine: number[] | null;
   scores: ScoreState;
+  history: MoveHistoryEntry[];
+  preferences: GamePreferences;
 
   // Game actions
   handleSquareClick: (index: number) => void;
   resetGame: () => void;
   newGame: () => void;
+  toggleCelebrations: () => void;
+  toggleAmbientGlow: () => void;
+  setTheme: (theme: ThemeVariant) => void;
 }
 
 export function useGame(): UseGameReturn {
@@ -31,16 +43,32 @@ export function useGame(): UseGameReturn {
     O: 0,
     draws: 0,
   });
+  const [history, setHistory] = useState<MoveHistoryEntry[]>([]);
+  const [preferences, setPreferences] = useState<GamePreferences>({
+    celebrationsEnabled: true,
+    ambientGlow: true,
+    theme: 'neon',
+  });
 
   // Handle square click with game logic
   const handleSquareClick = useCallback((index: number) => {
     // Validation: Check if square is empty and game is still active
     if (board[index] || winner || isDraw) return;
 
+    if (!currentPlayer) return;
+
     // Update board with current player's move
     const newBoard = [...board];
     newBoard[index] = currentPlayer;
     setBoard(newBoard);
+    setHistory(prev => [
+      ...prev,
+      {
+        player: currentPlayer,
+        index,
+        timestamp: Date.now(),
+      },
+    ]);
 
     // Check for winner
     const winnerResult = checkWinner(newBoard);
@@ -74,6 +102,7 @@ export function useGame(): UseGameReturn {
     setWinner(null);
     setIsDraw(false);
     setWinningLine(null);
+    setHistory([]);
   }, []);
 
   // Start completely new game (reset scores too)
@@ -81,6 +110,27 @@ export function useGame(): UseGameReturn {
     resetGame();
     setScores({ X: 0, O: 0, draws: 0 });
   }, [resetGame]);
+
+  const toggleCelebrations = useCallback(() => {
+    setPreferences(prev => ({
+      ...prev,
+      celebrationsEnabled: !prev.celebrationsEnabled,
+    }));
+  }, []);
+
+  const toggleAmbientGlow = useCallback(() => {
+    setPreferences(prev => ({
+      ...prev,
+      ambientGlow: !prev.ambientGlow,
+    }));
+  }, []);
+
+  const setTheme = useCallback((theme: ThemeVariant) => {
+    setPreferences(prev => ({
+      ...prev,
+      theme,
+    }));
+  }, []);
 
   return {
     // Game state
@@ -90,10 +140,15 @@ export function useGame(): UseGameReturn {
     isDraw,
     winningLine,
     scores,
+    history,
+    preferences,
 
     // Game actions
     handleSquareClick,
     resetGame,
     newGame,
+    toggleCelebrations,
+    toggleAmbientGlow,
+    setTheme,
   };
 }

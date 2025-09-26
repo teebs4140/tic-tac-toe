@@ -10,7 +10,7 @@ interface ScoreBoardProps {
 export default function ScoreBoard({ scores }: ScoreBoardProps) {
   return (
     <section
-      className="relative w-full max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-panel backdrop-blur-xl"
+      className="relative w-full max-w-3xl overflow-hidden rounded-3xl border border-white/15 bg-blue-950/70 p-6 shadow-panel backdrop-blur-xl"
       role="region"
       aria-label="Game scores"
     >
@@ -20,13 +20,13 @@ export default function ScoreBoard({ scores }: ScoreBoardProps) {
           <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Scoreboard</p>
           <h3 className="mt-2 text-2xl font-semibold text-slate-100">Current standings</h3>
         </div>
-        <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-slate-300">
+        <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-200">
           Live
         </span>
       </header>
 
       <div className="relative grid gap-4 sm:grid-cols-3">
-        <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-950/80 via-slate-900/60 to-sky-900/40 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
+        <div className="group relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-slate-950/85 via-slate-900/70 to-sky-900/45 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-sky-400/40 via-cyan-300/10 to-transparent opacity-70 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
           <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Player X</p>
           <div className="mt-3 flex items-baseline gap-2">
@@ -40,7 +40,7 @@ export default function ScoreBoard({ scores }: ScoreBoardProps) {
           </p>
         </div>
 
-        <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-950/80 via-slate-900/60 to-amber-900/30 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
+        <div className="group relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-slate-950/85 via-slate-900/70 to-amber-900/35 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-amber-300/35 via-amber-200/10 to-transparent opacity-70 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
           <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Draws</p>
           <div className="mt-3 flex items-baseline gap-2">
@@ -54,7 +54,7 @@ export default function ScoreBoard({ scores }: ScoreBoardProps) {
           </p>
         </div>
 
-        <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-950/80 via-slate-900/60 to-rose-900/35 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
+        <div className="group relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-slate-950/85 via-slate-900/70 to-rose-900/40 p-5 shadow-inner-panel transition-transform duration-300 ease-out hover:-translate-y-1">
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-rose-400/35 via-pink-300/10 to-transparent opacity-70 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
           <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Player O</p>
           <div className="mt-3 flex items-baseline gap-2">
