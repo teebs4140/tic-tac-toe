@@ -21,7 +21,7 @@ A modern, responsive tic-tac-toe web game built with Next.js 14, TypeScript, and
 ## Live Demo
 
 The game is deployed and ready to play:
-- **GitHub Pages**: `https://[your-username].github.io/tic-tac-toe`
+- **GitHub Pages**: `https://teebs4140.github.io/tic-tac-toe`
 - **Vercel**: Deploy with one click using Vercel
 
 ## Quick Start
