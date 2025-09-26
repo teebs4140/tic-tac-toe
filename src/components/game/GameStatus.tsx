@@ -36,8 +36,8 @@ export default function GameStatus({ currentPlayer, winner, isDraw }: GameStatus
   const status = getStatusMessage();
 
   return (
-    <div className="rounded-xl bg-white/30 backdrop-blur-md border border-white/40 px-6 py-3 shadow-lg" role="status" aria-live="polite">
-      <p className={`transition-all duration-300 ${status.className}`}>
+    <div className="text-center" role="status" aria-live="polite">
+      <p className={`transition-all duration-300 ${status.className} drop-shadow-sm`}>
         {status.message}
       </p>
     </div>

@@ -137,21 +137,19 @@ export default function HomePage() {
               <GameStatus currentPlayer={currentPlayer} winner={winner} isDraw={isDraw} />
             </div>
 
-            {/* Compact Score Display */}
-            <div className="rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 p-4 shadow-lg">
-              <div className="flex items-center justify-center gap-8 text-slate-800">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-700">{scores.X}</div>
-                  <div className="text-sm font-medium">Player X</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-600">{scores.draws}</div>
-                  <div className="text-sm font-medium">Draws</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-red-700">{scores.O}</div>
-                  <div className="text-sm font-medium">Player O</div>
-                </div>
+            {/* Elegant Score Display */}
+            <div className="flex items-center justify-center gap-32 mt-8">
+              <div className="text-center">
+                <div className="text-4xl font-light text-pink-800 mb-2 drop-shadow-sm">{scores.X}</div>
+                <div className="text-lg font-medium text-pink-700 tracking-wide">Player X</div>
+              </div>
+              <div className="text-center px-8">
+                <div className="text-4xl font-light text-rose-600 mb-2 drop-shadow-sm">{scores.draws}</div>
+                <div className="text-lg font-medium text-rose-500 tracking-wide">Draws</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-light text-pink-800 mb-2 drop-shadow-sm">{scores.O}</div>
+                <div className="text-lg font-medium text-pink-700 tracking-wide">Player O</div>
               </div>
             </div>
           </div>
