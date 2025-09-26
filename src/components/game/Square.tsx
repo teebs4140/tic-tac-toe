@@ -24,16 +24,14 @@ export default function Square({
       'aspect-square',
       'min-h-[90px] min-w-[90px]',
       'max-h-[260px] max-w-[260px]',
-      'rounded-[20px]',
-      'border border-white/40',
-      'bg-white/20 backdrop-blur-sm',
+      'rounded-[24px]',
+      'bg-white/90 backdrop-blur-sm',
       'text-[clamp(2.5rem,8vw,6.5rem)]',
       'font-bold',
       'transition-all duration-200 ease-out',
-      'shadow-lg',
+      'shadow-xl shadow-black/10',
       'disabled:cursor-not-allowed disabled:opacity-50',
       'focus-visible:outline-none',
-      'focus-visible:ring-4 focus-visible:ring-pink-400/50 focus-visible:ring-offset-2',
     ];
 
     if (glowEnabled) {
@@ -47,19 +45,17 @@ export default function Square({
     if (!value && !disabled) {
       baseStyles.push(
         'cursor-pointer',
-        'hover:-translate-y-1',
-        'hover:border-white/60',
-        'hover:bg-white/40',
-        'hover:shadow-xl'
+        'hover:-translate-y-2',
+        'hover:bg-white/95',
+        'hover:shadow-2xl hover:shadow-black/20'
       );
     }
 
     // Winning square animation
     if (isWinningSquare) {
       baseStyles.push(
-        'border-green-400/80',
-        'bg-green-100/50',
-        'shadow-xl shadow-green-400/30'
+        'bg-green-100/90',
+        'shadow-2xl shadow-green-400/40'
       );
     }
 
